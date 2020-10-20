@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bud-auth-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bud-auth-mongo
+  template:
+    metadata:
+      labels:
+        app: bud-auth-mongo
+    spec:
+      containers:
+        - name: bud-auth-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bud-auth-mongo-srv
+spec:
+  selector:
+    app: bud-auth-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
